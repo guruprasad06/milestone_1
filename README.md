@@ -94,17 +94,18 @@ assignment-system/
 
 ---
 
+---
+
 ## 🔧 Installation & Setup
 
 ### 1. Clone Repository
 ```bash
 git clone https://github.com/your-username/assignment-system.git
 cd assignment-system
-
 npm install
 MONGO_URI=your_mongodb_connection_string
-PORT=5000npm start
-
+PORT=5000
+npm start 
 | Method | Endpoint             | Description          |
 | ------ | -------------------- | -------------------- |
 | POST   | /api/assignments     | Create assignment    |
@@ -112,3 +113,7 @@ PORT=5000npm start
 | GET    | /api/assignments/:id | Get assignment by ID |
 | PUT    | /api/assignments/:id | Update assignment    |
 | DELETE | /api/assignments/:id | Delete assignment    |
+
+
+---
+
