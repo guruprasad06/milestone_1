@@ -2,6 +2,7 @@
 const Assignment = require("../models/Assignment");
 
 
+
 // Create Assignment
 exports.createAssignment = async (req, res) => {
     try {
@@ -90,28 +91,46 @@ exports.deleteAssignment = async (req, res) => {
 
 const Submission = require("../models/Submission");
 
+
+// Get submissions for an assignment
+exports.getSubmissions = async (req, res) => {
+    try {
+        const submissions = await Submission.find({
+            assignmentId: req.params.id
+        });
+
+        res.json(submissions);
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
 // Submit assignment
 exports.submitAssignment = async (req, res) => {
     try {
         const assignment = await Assignment.findById(req.params.id);
 
+        // check assignment exists
         if (!assignment) {
             return res.status(404).json({ msg: "Assignment not found" });
         }
 
-        // ⏰ Deadline check
+        // ⏰ check deadline
         if (new Date() > assignment.dueDate) {
             assignment.status = "closed";
             await assignment.save();
             return res.status(400).json({ msg: "Deadline passed" });
         }
 
+        // check status
         if (assignment.status !== "active") {
             return res.status(400).json({ msg: "Assignment is closed" });
         }
 
         const { studentName, content } = req.body;
 
+        // basic validation
         if (!studentName || !content) {
             return res.status(400).json({ msg: "Missing fields" });
         }
@@ -125,20 +144,6 @@ exports.submitAssignment = async (req, res) => {
         await submission.save();
 
         res.status(201).json(submission);
-
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
-};
-
-// Get submissions for an assignment
-exports.getSubmissions = async (req, res) => {
-    try {
-        const submissions = await Submission.find({
-            assignmentId: req.params.id
-        });
-
-        res.json(submissions);
 
     } catch (error) {
         res.status(500).json({ msg: error.message });

@@ -7,7 +7,7 @@ const {
   updateAssignment,
   deleteAssignment,
   submitAssignment,
-  getSubmissions
+  getSubmissions  
 } = require("../controllers/assignmentController");
 // temporary test route
 
@@ -16,7 +16,7 @@ router.get("/", getAssignments);
 router.get("/:id", getAssignment);
 router.put("/:id", updateAssignment);
 router.delete("/:id", deleteAssignment);
-router.post("/:id/submit", submitAssignment);
 router.get("/:id/submissions", getSubmissions);
+router.post("/:id/submit", submitAssignment);
 
 module.exports = router; 
